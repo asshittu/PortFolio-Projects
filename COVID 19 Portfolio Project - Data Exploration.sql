@@ -3,6 +3,8 @@ Covid 19 Data Exploration
 
 Skills Used: Temporary Tables, Joins, CTE's, Windows Functions, Aggregate Functions, Creating Views
 
+Data Gotten from Our World in Data --> https://ourworldindata.org/covid-deaths
+
 Platform: Google BigQuery
 
 */
