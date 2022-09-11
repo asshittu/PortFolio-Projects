@@ -4,7 +4,7 @@ These are queries used for Covid 19 Portfolio Project on Tableau
 
 Platform: BigQuery
 
-Data Gotten from Our World in Data --> https://ourworldindata.org/covid-deaths
+Data Gotten from "Our World in Data" from January 2020 to April 2021 --> https://ourworldindata.org/covid-deaths
 
 */
 
