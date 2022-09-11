@@ -11,7 +11,7 @@ SELECT
  *
 FROM `portfolio-project-362200.CovidDeaths.Deaths`
 WHERE continent IS NOT NULL
-ORDER BY location, date
+ORDER BY location, date;
 
 -- Selecting Data to start with
 
@@ -115,7 +115,7 @@ JOIN `portfolio-project-362200.CovidDeaths.Vaccines` vac
   ON dea.location = vac.location
   AND dea.date = vac.date
 WHERE dea.continent IS NOT NULL
-ORDER BY 2, 3
+ORDER BY 2, 3;
 
 
 -- Using CTE to perform calculation on Partition by
@@ -166,7 +166,7 @@ JOIN `portfolio-project-362200.CovidDeaths.Vaccines` vac
 WHERE dea.continent IS NOT NULL
 
 SELECT *, (counting_people_vaccinated)*100
-FROM Percent_Population_Vaccinated
+FROM Percent_Population_Vaccinated;
 
 
 -- Creating view to store data for visualization in Tableau
@@ -183,4 +183,4 @@ FROM `portfolio-project-362200.CovidDeaths.Deaths` dea
 JOIN `portfolio-project-362200.CovidDeaths.Vaccines` vac
   ON dea.location = vac.location
   AND dea.date = vac.date
-WHERE dea.continent IS NOT NULL
+WHERE dea.continent IS NOT NULL;
