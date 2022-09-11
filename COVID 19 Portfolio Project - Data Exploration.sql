@@ -1,13 +1,19 @@
+/*
+Covid 19 Data Exploration
+
+Skills Used: Temporary Tables, Joins, CTE's, Windows Functions, Aggregate Functions, Creating Views
+
+Platform: Google BigQuery
+
+*/
+
 SELECT  
  *
 FROM `portfolio-project-362200.CovidDeaths.Deaths`
 WHERE continent IS NOT NULL
-ORDER BY 3, 4;
+ORDER BY location, date
 
---SELECT  
---  *
---FROM `portfolio-project-362200.CovidDeaths.Deaths` 
---ORDER BY 3, 4
+-- Selecting Data to start with
 
 SELECT
   location,
@@ -20,8 +26,9 @@ FROM `portfolio-project-362200.CovidDeaths.Deaths`
 WHERE continent IS NOT NULL
 ORDER BY location, date;
 
--- Looking at Total Cases bs Total Deaths
+-- Viewing Total Cases vs Total Deaths
 -- Shows likehood of dying if you contract covid in your country
+
 SELECT  
   location,
   date,
@@ -33,8 +40,8 @@ WHERE location like '%Nigeria%' AND continent IS NOT NULL
 ORDER BY location, date;
 
 
--- Looking at Total Cases vs Population
--- Shows what percentage of population got covid
+-- Viewing Total Cases vs Population
+-- Shows what percentage of population got infected with Covid
 
 SELECT  
   location,
@@ -47,7 +54,7 @@ WHERE location like '%Nigeria%' AND continent IS NOT NULL
 ORDER BY location, date;
 
 
--- Looking at Countries with Highest Infection Rate compared to Population
+-- Countries with Highest Infection Rate compared to Population
 
 SELECT  
   location,
@@ -60,7 +67,7 @@ GROUP BY location, population
 ORDER BY percent_of_population_infected DESC;
 
 
--- Showing the Countries with Highest Death Count per Population
+-- Countries with Highest Death Count per Population
 
 SELECT  
   location,
@@ -69,6 +76,8 @@ FROM `portfolio-project-362200.CovidDeaths.Deaths`
 WHERE continent IS NOT NULL
 GROUP BY location
 ORDER BY total_death_count DESC;
+
+-- BREAKDOWN BY CONTINENT
 
 -- Showing Continents with the highest death count per population
 
@@ -91,7 +100,8 @@ WHERE continent IS NOT NULL
 --GROUP BY date
 ORDER BY 1, 2;
 
--- Looking at Total Population vs Vaccinations
+-- Total Population vs Vaccinations
+-- Shows Percentage of population that has received at least one Covid Vaccine
 
 SELECT 
   dea.continent, 
@@ -105,12 +115,12 @@ JOIN `portfolio-project-362200.CovidDeaths.Vaccines` vac
   ON dea.location = vac.location
   AND dea.date = vac.date
 WHERE dea.continent IS NOT NULL
-ORDER BY 2, 3;
+ORDER BY 2, 3
 
 
--- USE CTE
+-- Using CTE to perform calculation on Partition by
 
-WITH PopvsVac AS 
+WITH PopvsVac (continent, location, date, population, new_vaccinations, counting_people_vaccinated AS 
 (SELECT 
   dea.continent, 
   dea.location, 
@@ -127,7 +137,7 @@ WHERE dea.continent IS NOT NULL)
 SELECT *, (counting_people_vaccinated)*100
 FROM PopvsVac;
 
--- TEMP TABLE
+-- Using Temp Table to perform calculations on partition by
 
 DROP TABLE IF EXISTS Percent_Population_Vaccinated
 CREATE TEMPORARY TABLE Percent_Population_Vaccinated
@@ -138,7 +148,7 @@ CREATE TEMPORARY TABLE Percent_Population_Vaccinated
   population numeric,
   new_vaccinations numeric,
   counting_people_vaccinated numeric
-);
+)
 
 
 INSERT INTO Percent_Population_Vaccinated
